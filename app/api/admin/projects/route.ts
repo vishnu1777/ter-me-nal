@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
 
 // GET - List all projects
 export async function GET(request: NextRequest) {
   try {
+    const mod = await import('@/lib/prisma');
+    const prisma = mod.getPrisma ? mod.getPrisma() : (mod.prisma?.client ?? mod.prisma);
     const projects = await prisma.project.findMany({
       orderBy: { createdAt: "desc" },
     });
@@ -21,6 +22,8 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     // Check authentication
+    const mod = await import('@/lib/prisma');
+    const prisma = mod.getPrisma ? mod.getPrisma() : (mod.prisma?.client ?? mod.prisma);
     const _mod = await import('@supabase/auth-helpers-nextjs');
     const createRouteHandlerClient = ( _mod as any ).createRouteHandlerClient ?? ( _mod as any ).default?.createRouteHandlerClient;
     const supabase = createRouteHandlerClient({ cookies });
@@ -60,6 +63,8 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     // Check authentication
+    const mod = await import('@/lib/prisma');
+    const prisma = mod.getPrisma ? mod.getPrisma() : (mod.prisma?.client ?? mod.prisma);
     const _mod = await import('@supabase/auth-helpers-nextjs');
     const createRouteHandlerClient = ( _mod as any ).createRouteHandlerClient ?? ( _mod as any ).default?.createRouteHandlerClient;
     const supabase = createRouteHandlerClient({ cookies });
@@ -102,6 +107,8 @@ export async function PUT(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   try {
     // Check authentication
+    const mod = await import('@/lib/prisma');
+    const prisma = mod.getPrisma ? mod.getPrisma() : (mod.prisma?.client ?? mod.prisma);
     const _mod = await import('@supabase/auth-helpers-nextjs');
     const createRouteHandlerClient = ( _mod as any ).createRouteHandlerClient ?? ( _mod as any ).default?.createRouteHandlerClient;
     const supabase = createRouteHandlerClient({ cookies });

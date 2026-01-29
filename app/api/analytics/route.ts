@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
+// Lazy-import Prisma inside handlers to avoid build-time initialization
 
 export async function GET(request: NextRequest) {
   try {
+    const mod = await import('@/lib/prisma');
+    const prisma = mod.getPrisma ? mod.getPrisma() : (mod.prisma?.client ?? mod.prisma);
     const analytics = await prisma.analytics.findMany({
       orderBy: { executedAt: "desc" },
       take: 100,

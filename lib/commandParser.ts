@@ -315,15 +315,15 @@ async function executeAchievements(visitorId: string) {
       where: { visitorId },
     });
 
-    const achievementIds = userAchievements.map((ua) => ua.achievementId);
+    const achievementIds = userAchievements.map((ua: any) => ua.achievementId);
     const achievements = await prisma.achievement.findMany({
       where: { id: { in: achievementIds } },
     });
 
     // merge achievements into userAchievements by id
-    const merged = userAchievements.map((ua) => ({
+    const merged = userAchievements.map((ua: any) => ({
       ...ua,
-      achievement: achievements.find((a) => a.id === ua.achievementId) || null,
+      achievement: achievements.find((a: any) => a.id === ua.achievementId) || null,
     }));
 
     return {
