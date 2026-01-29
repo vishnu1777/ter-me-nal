@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 
 // GET - List all projects
@@ -22,30 +21,30 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     // Check authentication
+    const _mod = await import('@supabase/auth-helpers-nextjs');
+    const createRouteHandlerClient = ( _mod as any ).createRouteHandlerClient ?? ( _mod as any ).default?.createRouteHandlerClient;
     const supabase = createRouteHandlerClient({ cookies });
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
+    const { data: { session } } = await supabase.auth.getSession();
 
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const body = await request.json();
-    const project = await prisma.project.create({
-      data: {
-        name: body.name,
-        description: body.description,
-        longDesc: body.longDesc,
-        tech: body.tech || [],
-        github: body.github,
-        live: body.live,
-        featured: body.featured || false,
-        category: body.category,
-        startDate: body.startDate ? new Date(body.startDate) : null,
-        endDate: body.endDate ? new Date(body.endDate) : null,
-      },
-    });
+    const createData: any = {
+      name: body.name,
+      description: body.description,
+      longDesc: body.longDesc,
+      tech: body.tech || [],
+      github: body.github,
+      live: body.live,
+      featured: body.featured || false,
+      category: body.category,
+    };
+    if (body.startDate) createData.startDate = new Date(body.startDate);
+    if (body.endDate) createData.endDate = new Date(body.endDate);
+
+    const project = await prisma.project.create({ data: createData });
 
     return NextResponse.json(project, { status: 201 });
   } catch (error) {
@@ -61,10 +60,10 @@ export async function POST(request: NextRequest) {
 export async function PUT(request: NextRequest) {
   try {
     // Check authentication
+    const _mod = await import('@supabase/auth-helpers-nextjs');
+    const createRouteHandlerClient = ( _mod as any ).createRouteHandlerClient ?? ( _mod as any ).default?.createRouteHandlerClient;
     const supabase = createRouteHandlerClient({ cookies });
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
+    const { data: { session } } = await supabase.auth.getSession();
 
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -103,10 +102,10 @@ export async function PUT(request: NextRequest) {
 export async function DELETE(request: NextRequest) {
   try {
     // Check authentication
+    const _mod = await import('@supabase/auth-helpers-nextjs');
+    const createRouteHandlerClient = ( _mod as any ).createRouteHandlerClient ?? ( _mod as any ).default?.createRouteHandlerClient;
     const supabase = createRouteHandlerClient({ cookies });
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
+    const { data: { session } } = await supabase.auth.getSession();
 
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

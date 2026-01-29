@@ -1,4 +1,3 @@
-import { createBrowserClient } from "@supabase/ssr";
 import { createClient } from "@supabase/supabase-js";
 
 // Create Supabase client for browser

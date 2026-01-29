@@ -6,6 +6,7 @@ interface Experience {
   id: string;
   company: string;
   position: string;
+  location?: string;
   description: string;
   startDate: string;
   endDate: string | null;
@@ -20,6 +21,7 @@ export default function ExperienceManager() {
   const [formData, setFormData] = useState<Partial<Experience>>({
     company: "",
     position: "",
+    location: "",
     description: "",
     startDate: "",
     endDate: null,
@@ -177,6 +179,21 @@ export default function ExperienceManager() {
                 placeholder="Senior Developer"
               />
             </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-purple-200 mb-2">
+              Location
+            </label>
+            <input
+              type="text"
+              value={formData.location || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, location: e.target.value })
+              }
+              className="w-full px-4 py-2 bg-white/5 border border-purple-300/30 rounded-lg text-white placeholder-purple-300/50 focus:outline-none focus:ring-2 focus:ring-purple-400"
+              placeholder="City, Country or Remote"
+            />
           </div>
 
           <div>

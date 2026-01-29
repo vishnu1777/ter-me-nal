@@ -56,8 +56,8 @@ export default function Education({ data = defaultEducation }: EducationProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="border rounded p-4"
-            style={{ borderColor: currentTheme.text, borderOpacity: 0.3 }}
+            className="border rounded p-4 border-opacity-30"
+            style={{ borderColor: currentTheme.text }}
           >
             <div className="flex justify-between items-start mb-2">
               <div>

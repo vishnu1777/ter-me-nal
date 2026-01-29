@@ -68,8 +68,8 @@ export default function Projects({ data = defaultProjects }: ProjectsProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
-            className="border rounded p-4 hover:border-opacity-100 transition-all"
-            style={{ borderColor: currentTheme.text, borderOpacity: 0.3 }}
+            className="border rounded p-4 hover:border-opacity-100 transition-all border-opacity-30"
+            style={{ borderColor: currentTheme.text }}
           >
             <div className="flex items-start justify-between mb-2">
               <div className="flex items-center gap-2">

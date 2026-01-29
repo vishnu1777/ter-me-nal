@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 
 export async function GET(request: NextRequest) {
@@ -16,6 +15,8 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
+    const _mod = await import('@supabase/auth-helpers-nextjs');
+    const createRouteHandlerClient = ( _mod as any ).createRouteHandlerClient ?? ( _mod as any ).default?.createRouteHandlerClient;
     const supabase = createRouteHandlerClient({ cookies });
     const { data: { session } } = await supabase.auth.getSession();
     
@@ -31,7 +32,6 @@ export async function POST(request: NextRequest) {
         field: body.field,
         startDate: new Date(body.startDate),
         endDate: body.endDate ? new Date(body.endDate) : null,
-        grade: body.grade,
         description: body.description,
       },
     });
@@ -44,6 +44,8 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   try {
+    const _mod = await import('@supabase/auth-helpers-nextjs');
+    const createRouteHandlerClient = ( _mod as any ).createRouteHandlerClient ?? ( _mod as any ).default?.createRouteHandlerClient;
     const supabase = createRouteHandlerClient({ cookies });
     const { data: { session } } = await supabase.auth.getSession();
     
@@ -58,13 +60,17 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'Education ID required' }, { status: 400 });
     }
 
+    const updateData: any = {};
+    if (data.institution !== undefined) updateData.institution = data.institution;
+    if (data.degree !== undefined) updateData.degree = data.degree;
+    if (data.field !== undefined) updateData.field = data.field;
+    if (data.startDate !== undefined) updateData.startDate = data.startDate ? new Date(data.startDate) : undefined;
+    if (data.endDate !== undefined) updateData.endDate = data.endDate ? new Date(data.endDate) : undefined;
+    if (data.description !== undefined) updateData.description = data.description;
+
     const education = await prisma.education.update({
       where: { id },
-      data: {
-        ...data,
-        startDate: data.startDate ? new Date(data.startDate) : undefined,
-        endDate: data.endDate ? new Date(data.endDate) : undefined,
-      },
+      data: updateData,
     });
     
     return NextResponse.json(education);
@@ -75,6 +81,8 @@ export async function PUT(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
+    const _mod = await import('@supabase/auth-helpers-nextjs');
+    const createRouteHandlerClient = ( _mod as any ).createRouteHandlerClient ?? ( _mod as any ).default?.createRouteHandlerClient;
     const supabase = createRouteHandlerClient({ cookies });
     const { data: { session } } = await supabase.auth.getSession();
     

@@ -67,8 +67,8 @@ export default function Social() {
             whileTap={{ scale: 0.95 }}
             transition={{ delay: index * 0.05 }}
             onClick={() => handleOpen(social.url)}
-            className="border rounded p-4 text-center cursor-pointer hover:border-opacity-100 transition-all"
-            style={{ borderColor: currentTheme.text, borderOpacity: 0.3 }}
+            className="border rounded p-4 text-center cursor-pointer hover:border-opacity-100 transition-all border-opacity-30"
+            style={{ borderColor: currentTheme.text }}
           >
             <div className="text-3xl mb-2">{social.icon}</div>
             <div style={{ color: currentTheme.accent }} className="font-bold">

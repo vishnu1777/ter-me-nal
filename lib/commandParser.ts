@@ -313,13 +313,23 @@ async function executeAchievements(visitorId: string) {
   try {
     const userAchievements = await prisma.userAchievement.findMany({
       where: { visitorId },
-      include: { achievement: true },
     });
+
+    const achievementIds = userAchievements.map((ua) => ua.achievementId);
+    const achievements = await prisma.achievement.findMany({
+      where: { id: { in: achievementIds } },
+    });
+
+    // merge achievements into userAchievements by id
+    const merged = userAchievements.map((ua) => ({
+      ...ua,
+      achievement: achievements.find((a) => a.id === ua.achievementId) || null,
+    }));
 
     return {
       type: "component",
       component: "Achievements",
-      data: userAchievements,
+      data: merged,
     };
   } catch (error) {
     console.error("Error fetching achievements:", error);

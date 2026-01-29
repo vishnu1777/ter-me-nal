@@ -76,7 +76,7 @@ export const useTerminalStore = create<TerminalState>((set) => ({
 
   unlockAchievement: (achievementId) =>
     set((state) => ({
-      achievements: [...new Set([...state.achievements, achievementId])],
+      achievements: Array.from(new Set(state.achievements.concat(achievementId))),
     })),
 
   incrementCommandCount: () =>

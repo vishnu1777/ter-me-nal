@@ -9,7 +9,6 @@ interface Education {
   field: string;
   startDate: string;
   endDate: string | null;
-  grade: string | null;
   description: string | null;
 }
 
@@ -23,7 +22,6 @@ export default function EducationManager() {
     field: "",
     startDate: "",
     endDate: null,
-    grade: "",
     description: "",
   });
 
@@ -117,7 +115,6 @@ export default function EducationManager() {
       field: "",
       startDate: "",
       endDate: null,
-      grade: "",
       description: "",
     });
   };
@@ -226,20 +223,7 @@ export default function EducationManager() {
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-purple-200 mb-2">
-                Grade/GPA
-              </label>
-              <input
-                type="text"
-                value={formData.grade || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, grade: e.target.value })
-                }
-                className="w-full px-4 py-2 bg-white/5 border border-purple-300/30 rounded-lg text-white placeholder-purple-300/50 focus:outline-none focus:ring-2 focus:ring-purple-400"
-                placeholder="3.8 GPA, First Class..."
-              />
-            </div>
+            {/* Grade removed because it's not part of the Prisma schema */}
           </div>
 
           <div>
@@ -297,7 +281,6 @@ export default function EducationManager() {
                   <p className="text-purple-300">{edu.institution}</p>
                   <p className="text-sm text-purple-300/70 mt-1">
                     {formatDate(edu.startDate)} - {formatDate(edu.endDate)}
-                    {edu.grade && ` • ${edu.grade}`}
                   </p>
                 </div>
 
