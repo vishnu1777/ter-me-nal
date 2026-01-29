@@ -1,0 +1,10 @@
+# Terminal Portfolio
+
+This is a sample resume file. Replace this with your actual resume PDF.
+
+To add your resume:
+1. Save your resume as `resume.pdf`
+2. Place it in the `public` folder
+3. The `download resume` command will now download your actual resume
+
+You can access it at: /resume.pdf

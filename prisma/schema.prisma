@@ -1,0 +1,138 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Project {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  description String
+  longDesc    String
+  tech        String[]
+  github      String?
+  live        String?
+  image       String?
+  featured    Boolean   @default(false)
+  category    String
+  startDate   DateTime
+  endDate     DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@index([category])
+  @@index([featured])
+}
+
+model Skill {
+  id          String @id @default(cuid())
+  name        String @unique
+  category    String
+  proficiency Int // 1-100
+  icon        String?
+  yearsExp    Float
+  order       Int    @default(0)
+
+  @@index([category])
+}
+
+model Experience {
+  id          String    @id @default(cuid())
+  company     String
+  position    String
+  description String
+  startDate   DateTime
+  endDate     DateTime?
+  current     Boolean   @default(false)
+  location    String
+  tech        String[]
+  order       Int       @default(0)
+}
+
+model Education {
+  id          String    @id @default(cuid())
+  institution String
+  degree      String
+  field       String
+  startDate   DateTime
+  endDate     DateTime?
+  current     Boolean   @default(false)
+  description String?
+  gpa         String?
+}
+
+model Visitor {
+  id        String   @id @default(cuid())
+  ip        String
+  country   String?
+  city      String?
+  browser   String?
+  commands  String[]
+  visitedAt DateTime @default(now())
+
+  @@index([visitedAt])
+}
+
+model Guestbook {
+  id        String   @id @default(cuid())
+  name      String
+  message   String
+  email     String?
+  createdAt DateTime @default(now())
+  approved  Boolean  @default(false)
+
+  @@index([approved])
+  @@index([createdAt])
+}
+
+model Analytics {
+  id           String   @id @default(cuid())
+  command      String
+  executedAt   DateTime @default(now())
+  responseTime Int
+  visitorId    String
+
+  @@index([command])
+  @@index([executedAt])
+}
+
+model Achievement {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String
+  icon        String
+  condition   String
+  rarity      String // common, rare, epic, legendary
+  points      Int      @default(10)
+}
+
+model UserAchievement {
+  id            String   @id @default(cuid())
+  visitorId     String
+  achievementId String
+  unlockedAt    DateTime @default(now())
+
+  @@unique([visitorId, achievementId])
+  @@index([visitorId])
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  slug        String   @unique
+  excerpt     String
+  content     String
+  published   Boolean  @default(false)
+  tags        String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  views       Int      @default(0)
+
+  @@index([published])
+  @@index([createdAt])
+}
