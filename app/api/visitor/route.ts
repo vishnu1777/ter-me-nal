@@ -3,8 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const mod = await import('@/lib/prisma');
-    const prisma = mod.getPrisma ? mod.getPrisma() : (mod.prisma?.client ?? mod.prisma);
+    const mod = await import("@/lib/prisma");
+    const prisma = mod.getPrisma
+      ? mod.getPrisma()
+      : (mod.prisma?.client ?? mod.prisma);
     const body = await request.json();
     const { id, userAgent } = body;
 
@@ -34,8 +36,10 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    const mod = await import('@/lib/prisma');
-    const prisma = mod.getPrisma ? mod.getPrisma() : (mod.prisma?.client ?? mod.prisma);
+    const mod = await import("@/lib/prisma");
+    const prisma = mod.getPrisma
+      ? mod.getPrisma()
+      : (mod.prisma?.client ?? mod.prisma);
     const count = await prisma.visitor.count();
     return NextResponse.json({ count });
   } catch (error) {

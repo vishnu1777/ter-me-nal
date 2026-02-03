@@ -3,8 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   try {
-    const mod = await import('@/lib/prisma');
-    const prisma = mod.getPrisma ? mod.getPrisma() : (mod.prisma?.client ?? mod.prisma);
+    const mod = await import("@/lib/prisma");
+    const prisma = mod.getPrisma
+      ? mod.getPrisma()
+      : (mod.prisma?.client ?? mod.prisma);
     const analytics = await prisma.analytics.findMany({
       orderBy: { executedAt: "desc" },
       take: 100,

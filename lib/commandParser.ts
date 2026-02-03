@@ -323,7 +323,8 @@ async function executeAchievements(visitorId: string) {
     // merge achievements into userAchievements by id
     const merged = userAchievements.map((ua: any) => ({
       ...ua,
-      achievement: achievements.find((a: any) => a.id === ua.achievementId) || null,
+      achievement:
+        achievements.find((a: any) => a.id === ua.achievementId) || null,
     }));
 
     return {

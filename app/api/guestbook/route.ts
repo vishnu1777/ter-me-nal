@@ -4,8 +4,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   try {
-    const mod = await import('@/lib/prisma');
-    const prisma = mod.getPrisma ? mod.getPrisma() : (mod.prisma?.client ?? mod.prisma);
+    const mod = await import("@/lib/prisma");
+    const prisma = mod.getPrisma
+      ? mod.getPrisma()
+      : (mod.prisma?.client ?? mod.prisma);
     const entries = await prisma.guestbook.findMany({
       where: { approved: true },
       orderBy: { createdAt: "desc" },
@@ -24,8 +26,10 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const mod = await import('@/lib/prisma');
-    const prisma = mod.getPrisma ? mod.getPrisma() : (mod.prisma?.client ?? mod.prisma);
+    const mod = await import("@/lib/prisma");
+    const prisma = mod.getPrisma
+      ? mod.getPrisma()
+      : (mod.prisma?.client ?? mod.prisma);
     const body = await request.json();
     const { name, message, email } = body;
 

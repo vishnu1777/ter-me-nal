@@ -4,8 +4,10 @@ import { cookies } from "next/headers";
 // GET - List all skills
 export async function GET(request: NextRequest) {
   try {
-    const mod = await import('@/lib/prisma');
-    const prisma = mod.getPrisma ? mod.getPrisma() : (mod.prisma?.client ?? mod.prisma);
+    const mod = await import("@/lib/prisma");
+    const prisma = mod.getPrisma
+      ? mod.getPrisma()
+      : (mod.prisma?.client ?? mod.prisma);
     const skills = await prisma.skill.findMany({
       orderBy: { order: "asc" },
     });
@@ -21,12 +23,18 @@ export async function GET(request: NextRequest) {
 // POST - Create new skill
 export async function POST(request: NextRequest) {
   try {
-    const mod = await import('@/lib/prisma');
-    const prisma = mod.getPrisma ? mod.getPrisma() : (mod.prisma?.client ?? mod.prisma);
-    const _mod = await import('@supabase/auth-helpers-nextjs');
-    const createRouteHandlerClient = ( _mod as any ).createRouteHandlerClient ?? ( _mod as any ).default?.createRouteHandlerClient;
+    const mod = await import("@/lib/prisma");
+    const prisma = mod.getPrisma
+      ? mod.getPrisma()
+      : (mod.prisma?.client ?? mod.prisma);
+    const _mod = await import("@supabase/auth-helpers-nextjs");
+    const createRouteHandlerClient =
+      (_mod as any).createRouteHandlerClient ??
+      (_mod as any).default?.createRouteHandlerClient;
     const supabase = createRouteHandlerClient({ cookies });
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -55,12 +63,18 @@ export async function POST(request: NextRequest) {
 // PUT - Update skill
 export async function PUT(request: NextRequest) {
   try {
-    const mod = await import('@/lib/prisma');
-    const prisma = mod.getPrisma ? mod.getPrisma() : (mod.prisma?.client ?? mod.prisma);
-    const _mod = await import('@supabase/auth-helpers-nextjs');
-    const createRouteHandlerClient = ( _mod as any ).createRouteHandlerClient ?? ( _mod as any ).default?.createRouteHandlerClient;
+    const mod = await import("@/lib/prisma");
+    const prisma = mod.getPrisma
+      ? mod.getPrisma()
+      : (mod.prisma?.client ?? mod.prisma);
+    const _mod = await import("@supabase/auth-helpers-nextjs");
+    const createRouteHandlerClient =
+      (_mod as any).createRouteHandlerClient ??
+      (_mod as any).default?.createRouteHandlerClient;
     const supabase = createRouteHandlerClient({ cookies });
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -90,12 +104,18 @@ export async function PUT(request: NextRequest) {
 // DELETE - Delete skill
 export async function DELETE(request: NextRequest) {
   try {
-    const mod = await import('@/lib/prisma');
-    const prisma = mod.getPrisma ? mod.getPrisma() : (mod.prisma?.client ?? mod.prisma);
-    const _mod = await import('@supabase/auth-helpers-nextjs');
-    const createRouteHandlerClient = ( _mod as any ).createRouteHandlerClient ?? ( _mod as any ).default?.createRouteHandlerClient;
+    const mod = await import("@/lib/prisma");
+    const prisma = mod.getPrisma
+      ? mod.getPrisma()
+      : (mod.prisma?.client ?? mod.prisma);
+    const _mod = await import("@supabase/auth-helpers-nextjs");
+    const createRouteHandlerClient =
+      (_mod as any).createRouteHandlerClient ??
+      (_mod as any).default?.createRouteHandlerClient;
     const supabase = createRouteHandlerClient({ cookies });
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
 
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

@@ -16,13 +16,16 @@ export function getPrisma(): PrismaClient {
 // Create a proxy so existing code can call `prisma.model.method()` without
 // initializing the client at module import time.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const prismaProxy = new Proxy({}, {
-  get(_target, prop: string | symbol) {
-    // Lazily create the client when any property is accessed
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const client: any = getPrisma();
-    return client[prop as any];
+const prismaProxy = new Proxy(
+  {},
+  {
+    get(_target, prop: string | symbol) {
+      // Lazily create the client when any property is accessed
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const client: any = getPrisma();
+      return client[prop as any];
+    },
   },
-});
+);
 
 export const prisma: any = prismaProxy;
